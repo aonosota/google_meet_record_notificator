@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Meet Record Reminder — Local Test</title>
+  <style>
+    body { margin: 0; background: #202124; color: #fff; font-family: 'Google Sans', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 24px; }
+    h2 { margin: 0; font-size: 18px; color: #aaa; }
+    #join-btn { padding: 12px 32px; background: #1a73e8; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    #join-btn:hover { background: #1557b0; }
+    #status { font-size: 13px; color: #888; }
+  </style>
+</head>
+<body>
+  <h2>Google Meet — Pre-join Screen (Simulator)</h2>
+  <!-- content.js はこの span を「Join now」として検知する -->
+  <button id="join-btn" onclick="simulateJoin()">
+    <span>Join now</span>
+  </button>
+  <p id="status">「Join now」ボタンをクリックすると会議参加をシミュレートします</p>
+
+  <script>
+    function simulateJoin() {
+      document.getElementById('status').textContent = '参加中... バナーが出るはず';
+      // ボタンを削除することで「Join now が消えた = 会議参加」を模倣
+      document.getElementById('join-btn').remove();
+    }
+  </script>
+
+  <!-- content.js のロジックを直接注入（manifest 制約なしでテスト） -->
+  <script>
+    // location.pathname チェックをスキップするためダミーパスを上書き
+    Object.defineProperty(location, 'pathname', { value: '/abc-defg-hij', configurable: true });
+  </script>
+  <script src="../content.js"></script>
+</body>
+</html>
